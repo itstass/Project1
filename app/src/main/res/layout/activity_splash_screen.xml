@@ -14,7 +14,16 @@
       android:layout_width="200dp"
       android:layout_height="200dp"
       android:src="@drawable/logoimage"
-      android:contentDescription="App Logo"
+      android:contentDescription="Splash Logo"
       android:scaleType="centerCrop"/>
+  <TextView
+      android:id="@+id/appName"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="PharmaDoc"
+      android:textColor="#6544A6"
+      android:textSize="24sp"
+      android:fontFamily="sans-serif-medium"
+      android:layout_marginTop="16dp" />
 
 </LinearLayout>

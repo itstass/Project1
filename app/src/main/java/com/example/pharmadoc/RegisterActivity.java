@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,14 +17,14 @@ import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    // Firebase Authentication instance
     private FirebaseAuth mAuth;
 
     // Regex patterns for validation
     private static final String USERNAME_PATTERN = "^[a-zA-Z0-9._-]{3,}$";
     private static final String EMAIL_PATTERN = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
-
     private static final String MOBILE_PATTERN = "^\\d{10}$";
+
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +33,15 @@ public class RegisterActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();  // Initialize Firebase Auth
 
+        // Initializing views
         EditText etUsername = findViewById(R.id.et_register_username);
         EditText etEmail = findViewById(R.id.et_register_email);
         EditText etPassword = findViewById(R.id.et_register_password);
         EditText etConfirmPassword = findViewById(R.id.et_register_confirm_password);
         EditText etMobile = findViewById(R.id.et_register_mobile);
         Button btnRegister = findViewById(R.id.btn_register);
-        Button btnLogin = findViewById(R.id.btn_login);
+       // Button loginButton = findViewById(R.id.loginButton);
+        progressBar = findViewById(R.id.progressBar);
 
         btnRegister.setOnClickListener(v -> {
             String username = etUsername.getText().toString();
@@ -49,9 +51,12 @@ public class RegisterActivity extends AppCompatActivity {
             String mobile = etMobile.getText().toString();
 
             if (validateForm(username, email, password, confirmPassword, mobile)) {
+                progressBar.setVisibility(View.VISIBLE);  // Show progress bar during registration process
+
                 // If form is valid, create a new user with Firebase
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this, task -> {
+                            progressBar.setVisibility(View.GONE);  // Hide progress bar after task completion
                             if (task.isSuccessful()) {
                                 // User registered successfully
                                 FirebaseUser user = mAuth.getCurrentUser();
@@ -66,13 +71,12 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        btnLogin.setOnClickListener(v -> {
+        /*btnLogin.setOnClickListener(v -> {
             Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
             startActivity(intent);
-        });
+        });*/
     }
 
-    // Send email verification
     private void sendEmailVerification(FirebaseUser user) {
         user.sendEmailVerification()
                 .addOnCompleteListener(this, task -> {
@@ -103,8 +107,6 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(RegisterActivity.this, "Invalid email format", Toast.LENGTH_SHORT).show();
             return false;
         }
-
-
 
         if (!password.equals(confirmPassword)) {
             Toast.makeText(RegisterActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
