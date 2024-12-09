@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "746512732328",
+    "project_id": "pharmadoc-35a71",
+    "storage_bucket": "pharmadoc-35a71.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:746512732328:android:d0bb2920e080683c09729d",
+        "android_client_info": {
+          "package_name": "com.example.pharmadoc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbIa-ofvS4a3orfgt6NMzPr1quGI7crWw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
