@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8F8F8">
+
+    <!-- Greeting Text -->
+    <TextView
+        android:id="@+id/greetingText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Welcome User,"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <!-- Subtitle -->
+    <TextView
+        android:id="@+id/subtitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/greetingText"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="We are here to help you connect to doctors and order medicines online."
+        android:textColor="#808080"
+        android:textSize="14sp" />
+
+    <!-- Order Medicine Section -->
+
+    <!-- Consult Doctors Section -->
+
+    <RelativeLayout
+        android:id="@+id/orderMedicineCard"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/subtitleText"
+        android:layout_margin="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
+        android:background="#FFE2E2"
+        android:elevation="4dp"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/orderMedicineTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Order Medicine"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/orderMedicineDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/orderMedicineTitle"
+            android:layout_marginTop="8dp"
+            android:text="Get medicines delivered at your doorstep."
+            android:textColor="#808080"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/orderMedicineImage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="-16dp" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="340dp"
+            android:layout_height="71dp"
+            android:layout_alignEnd="@+id/orderMedicineImage"
+            android:layout_marginStart="-217dp"
+            android:layout_marginEnd="-153dp"
+            android:layout_toEndOf="@+id/orderMedicineImage"
+            app:srcCompat="@drawable/medc2" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/consultDoctorsCard"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/orderMedicineCard"
+        android:layout_margin="16dp"
+        android:background="#D8F1F7"
+        android:padding="16dp"
+        android:elevation="4dp">
+
+        <TextView
+            android:id="@+id/consultDoctorsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Consult Doctors"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/consultDoctorsDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/consultDoctorsTitle"
+            android:layout_marginTop="8dp"
+            android:text="Get expert advice from specialist doctors."
+            android:textColor="#808080"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/consultDoctorsImage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="-65dp"
+            android:layout_toEndOf="@+id/consultDoctorsImage"
+            app:srcCompat="@drawable/doctor" />
+    </RelativeLayout>
+</RelativeLayout>

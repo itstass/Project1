@@ -1,0 +1,231 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F8F8F8">
+
+    <!-- Search Bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+
+        android:elevation="4dp"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+
+
+        <EditText
+            android:id="@+id/searchBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="@android:color/transparent"
+            android:hint="Search name"
+            android:inputType="text"
+            android:padding="8dp"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <!-- Tab Layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/tabMedicine"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Medicine"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/tabDoctor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Doctor"
+            android:textSize="18sp"
+            android:textColor="#808080" />
+    </LinearLayout>
+
+    <!-- Category List -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- OTC Medicine Card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#FFE2E2"
+                android:padding="16dp"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="OTC Medicine"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Pain relievers, cold remedies, antacids, and allergy medication."
+                    android:textSize="14sp"
+                    android:textColor="#808080" />
+            </LinearLayout>
+
+            <!-- Diabetic Care Card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#D8F1F7"
+                android:padding="16dp"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Diabetic Care"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Insulin and oral antidiabetic medication."
+                    android:textSize="14sp"
+                    android:textColor="#808080" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#FFE2E2"
+                android:padding="16dp"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dental Care"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Pain relivers and debtal floss,toothpaste,mouthwash."
+                    android:textSize="14sp"
+                    android:textColor="#808080" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#D8F1F7"
+                android:padding="16dp"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mental Health"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Antidepressants,Cholesterol Management,Anticoagulants."
+                    android:textSize="14sp"
+                    android:textColor="#808080" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#FFE2E2"
+                android:padding="16dp"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Women's Health"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Menstrual products,prenatal vitamins and contraceptives."
+                    android:textSize="14sp"
+                    android:textColor="#808080" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#D8F1F7"
+                android:padding="16dp"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="First Aid`"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Bandages,antiseptics and wound care kits."
+                    android:textSize="14sp"
+                    android:textColor="#808080" />
+            </LinearLayout>
+
+
+
+
+
+            <!-- Additional categories can be added here -->
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

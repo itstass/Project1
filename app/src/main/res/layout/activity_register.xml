@@ -58,7 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Mobile"
-        android:inputType="textPassword"
+        android:inputType="number"
         android:padding="16dp"
         android:layout_marginBottom="16dp"
         android:background="@android:drawable/editbox_background" />
@@ -81,12 +81,15 @@
             android:text="Register"
             android:textColor="@android:color/white" />
 
-        <TextView
-            android:id="@+id/loginLink"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Already have an account? Log in"
-            android:gravity="center" />
+    <TextView
+        android:id="@+id/tv_login_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Already have an account? Log In"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
 
 
     </LinearLayout>

@@ -16,13 +16,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String USERNAME_PATTERN = "^[a-zA-Z0-9._-]{3,}$";  // Username: min 3 chars, alphanumeric, dots, dashes, underscores
-    private static final String EMAIL_PATTERN = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";  // Simple email pattern
+    private static final String USERNAME_PATTERN = "^[a-zA-Z0-9._-]{3,}$";
+    private static final String EMAIL_PATTERN = "^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
 
     FirebaseAuth mAuth;
     ProgressBar progressBar;
@@ -32,43 +33,59 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initializing views
-        EditText etUsername = findViewById(R.id.email);
+        EditText etEmail = findViewById(R.id.email);
         EditText etPassword = findViewById(R.id.password);
         Button btnLogin = findViewById(R.id.loginButton);
         TextView btnRegister = findViewById(R.id.registerLink);
+        TextView forgotPasswordLink = findViewById(R.id.forgotPasswordLink); // 🔹 Forgot Password Link
         progressBar = findViewById(R.id.progressBar);
 
-        // Initialize FirebaseAuth
         mAuth = FirebaseAuth.getInstance();
 
-        // Go to register activity on button click
         btnRegister.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+            startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+        });
+
+        forgotPasswordLink.setOnClickListener(v1 -> {
+            // 🔹 Open Forgot Password Activity
+            Intent intent = new Intent(MainActivity.this, ForgotPasswordActivity.class);
             startActivity(intent);
         });
 
-        // Login validation
         btnLogin.setOnClickListener(v -> {
-            String username = etUsername.getText().toString();
-            String password = etPassword.getText().toString();
+            String email = etEmail.getText().toString().trim();
+            String password = etPassword.getText().toString().trim();
 
-            if (validateForm(username, password)) {
-                progressBar.setVisibility(View.VISIBLE);  // Show progress bar during login process
+            // 🔹 Check if it's the admin account
+            if (email.equals("admin") && password.equals("admin")) {
+                Toast.makeText(MainActivity.this, "Admin Login Successful", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, AdminHomeActivity.class));
+                finish();
+                return;
+            }
 
-                // Proceed with login if the form is valid
-                mAuth.signInWithEmailAndPassword(username, password)
+            // 🔹 Regular user login
+            if (validateForm(email, password)) {
+                progressBar.setVisibility(View.VISIBLE);
+
+                mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                progressBar.setVisibility(View.GONE);  // Hide progress bar after task completion
+                                progressBar.setVisibility(View.GONE);
 
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                                    // Navigate to the next activity if login is successful
-                                    Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    if (user != null && user.isEmailVerified()) {
+                                        Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(MainActivity.this, HomePage.class));
+
+                                    } else {
+                                        Toast.makeText(MainActivity.this,
+                                                "Please verify your email before logging in.",
+                                                Toast.LENGTH_LONG).show();
+                                        FirebaseAuth.getInstance().signOut();
+                                    }
                                 } else {
                                     Toast.makeText(MainActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                                 }
@@ -78,18 +95,17 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // Function to validate form fields
-    private boolean validateForm(String username, String password) {
-        if (username.isEmpty() || password.isEmpty()) {
-            Toast.makeText(MainActivity.this, "Please enter all the fields", Toast.LENGTH_SHORT).show();
+    private boolean validateForm(String email, String password) {
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Please enter all fields", Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        if (!Pattern.matches(EMAIL_PATTERN, username) && !Pattern.matches(USERNAME_PATTERN, username)) {
-            Toast.makeText(MainActivity.this, "Please enter a valid email or username", Toast.LENGTH_SHORT).show();
+        if (!Pattern.matches(EMAIL_PATTERN, email) && !Pattern.matches(USERNAME_PATTERN, email)) {
+            Toast.makeText(this, "Please enter a valid email or username", Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        return true; // All validations passed
+        return true;
     }
 }

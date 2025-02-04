@@ -67,5 +67,13 @@
             android:text="Don't have an account? Register"
             android:gravity="center" />
 
+    <TextView
+        android:id="@+id/forgotPasswordLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forgot Password?"
+        android:textSize="14sp"
+        android:layout_marginTop="16dp" />
+
     </LinearLayout>
 
