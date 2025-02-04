@@ -1,40 +1,23 @@
 package com.example.pharmadoc;
 
-
-
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.util.Arrays;
 
 public class UpdateProductActivity extends AppCompatActivity {
 
-    private static final int PICK_IMAGE_REQUEST = 1;
-
-    private EditText editTextName;
-    private EditText editTextPrice;
-    private EditText editTextQuantity;
+    private EditText editTextProductName, editTextProductPrice, editTextProductQuantity;
     private ImageView imageViewProduct;
-    private Button buttonUpdate;
-    private Button buttonSelectImage;
-    private Button buttonSearch;
-    private TextView textViewProductId;
+    private Button buttonUpdateProduct;
 
     private DatabaseHelper databaseHelper;
+    private String productId;
     private byte[] productImageByteArray;
 
     @Override
@@ -42,89 +25,60 @@ public class UpdateProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_product);
 
-        editTextName = findViewById(R.id.edit_text_product_name);
-        editTextPrice = findViewById(R.id.edit_text_product_price);
-        editTextQuantity = findViewById(R.id.edit_text_product_quantity);
+        // Initialize views
+        editTextProductName = findViewById(R.id.edit_text_product_name);
+        editTextProductPrice = findViewById(R.id.edit_text_product_price);
+        editTextProductQuantity = findViewById(R.id.edit_text_product_quantity);
         imageViewProduct = findViewById(R.id.image_view_product);
-        buttonUpdate = findViewById(R.id.button_update);
-        buttonSelectImage = findViewById(R.id.button_select_image);
-        buttonSearch = findViewById(R.id.button_search);
-        textViewProductId = findViewById(R.id.text_view_product_id);
+        buttonUpdateProduct = findViewById(R.id.button_update_product);
 
+        // Initialize DatabaseHelper
         databaseHelper = new DatabaseHelper(this);
 
-        buttonSearch.setOnClickListener(view -> searchProduct());
-        buttonSelectImage.setOnClickListener(view -> selectImage());
-        buttonUpdate.setOnClickListener(view -> updateProduct());
-    }
+        // Get product details from Intent
+        Intent intent = getIntent();
+        productId = intent.getStringExtra("product_id");
+        String productName = intent.getStringExtra("product_name");
+        double productPrice = intent.getDoubleExtra("product_price", 0);
+        int productQuantity = intent.getIntExtra("product_quantity", 0);
+        productImageByteArray = intent.getByteArrayExtra("product_image");
 
-    private void searchProduct() {
-        String productName = editTextName.getText().toString().trim();
-        if (productName.isEmpty()) {
-            Toast.makeText(this, "Please enter a product name to search", Toast.LENGTH_SHORT).show();
-            return;
+        // Set the data to the EditText fields and ImageView
+        editTextProductName.setText(productName);
+        editTextProductPrice.setText(String.valueOf(productPrice));
+        editTextProductQuantity.setText(String.valueOf(productQuantity));
+
+        // If you want to display the image, decode the byte array to a bitmap
+        if (productImageByteArray != null) {
+            imageViewProduct.setImageBitmap(BitmapFactory.decodeByteArray(productImageByteArray, 0, productImageByteArray.length));
         }
 
-        Cursor cursor = databaseHelper.getProductByName(productName);
-        if (cursor != null && cursor.moveToFirst()) {
-            int productId = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_ID));
-            double price = cursor.getDouble(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_PRODUCT_PRICE));
-            int quantity = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_PRODUCT_QUANTITY));
-            byte[] image = cursor.getBlob(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_PRODUCT_IMAGE_URI));
+        // Set the update button functionality
+        buttonUpdateProduct.setOnClickListener(v -> {
+            // Get updated data from the input fields
+            String updatedProductName = editTextProductName.getText().toString();
+            double updatedProductPrice = Double.parseDouble(editTextProductPrice.getText().toString());
+            int updatedProductQuantity = Integer.parseInt(editTextProductQuantity.getText().toString());
 
-            editTextPrice.setText(String.valueOf(price));
-            editTextQuantity.setText(String.valueOf(quantity));
-            textViewProductId.setText("Product ID: " + productId);
+            // Optionally, you could add code for updating the product image here
 
-            if (image != null) {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
-                imageViewProduct.setImageBitmap(bitmap);
-                productImageByteArray = image;
-            }
-            cursor.close();
-        } else {
-            Toast.makeText(this, "Product not found", Toast.LENGTH_SHORT).show();
-        }
+            // Update the product in the database
+            updateProduct(updatedProductName, updatedProductPrice, updatedProductQuantity);
+        });
     }
 
-    private void selectImage() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, PICK_IMAGE_REQUEST);
-    }
+    private void updateProduct(String updatedProductName, double updatedProductPrice, int updatedProductQuantity) {
+        // Call the update method from DatabaseHelper to update the product in the database
+        databaseHelper.updateProduct(
+                Integer.parseInt(productId), // Convert productId to int
+                updatedProductName,
+                updatedProductPrice,
+                updatedProductQuantity,
+                productImageByteArray  // You can update the image if needed
+        );
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Uri imageUri = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-                imageViewProduct.setImageBitmap(bitmap);
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
-                productImageByteArray = byteArrayOutputStream.toByteArray();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void updateProduct() {
-        String productName = editTextName.getText().toString().trim();
-        String productPrice = editTextPrice.getText().toString().trim();
-        String productQuantity = editTextQuantity.getText().toString().trim();
-
-        if (productName.isEmpty() || productPrice.isEmpty() || productQuantity.isEmpty()) {
-            Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        double price = Double.parseDouble(productPrice);
-        int quantity = Integer.parseInt(productQuantity);
-
-        String productIdText = textViewProductId.getText().toString();
-        int productId = Integer.parseInt(productIdText.replaceAll("\\D+", ""));
-
-        databaseHelper.updateProduct(productId, productName, price, quantity, productImageByteArray);
+        // Show a toast and finish the activity to go back to the list
+        Toast.makeText(this, "Product updated successfully!", Toast.LENGTH_SHORT).show();
+        finish();  // Close the activity and return to the previous screen
     }
 }

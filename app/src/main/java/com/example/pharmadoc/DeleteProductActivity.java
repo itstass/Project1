@@ -82,6 +82,6 @@ public class DeleteProductActivity extends AppCompatActivity {
     private void deleteProduct() {
         String productName = editTextName.getText().toString().trim();
 
-        databaseHelper.deleteProduct(productName);
+        databaseHelper.deleteProductByName(productName);
     }
 }

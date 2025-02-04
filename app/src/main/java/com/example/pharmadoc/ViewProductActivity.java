@@ -1,19 +1,17 @@
 package com.example.pharmadoc;
 
-
-
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 
 public class ViewProductActivity extends AppCompatActivity {
     private ListView listViewProducts;
     private DatabaseHelper databaseHelper;
+    private ProductAdapter productAdapter;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,28 +19,30 @@ public class ViewProductActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_product);
 
         listViewProducts = findViewById(R.id.list_view_products);
-        Button buttonUpdate = findViewById(R.id.button_update);
-        Button buttonDelete = findViewById(R.id.button_delete);
+        searchView = findViewById(R.id.search_view);
         databaseHelper = new DatabaseHelper(this);
 
+        // Initialize the adapter with all products
         displayProducts();
 
-        buttonUpdate.setOnClickListener(new View.OnClickListener() {
+        // Setup search functionality
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onClick(View v) {
-                // Handle the Update button click
-                handleUpdate();
+            public boolean onQueryTextSubmit(String query) {
+                // Handle the action when search is submitted
+                searchProduct(query);
+                return true;
             }
-        });
 
-        buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                // Handle the Delete button click
-                handleDelete();
+            public boolean onQueryTextChange(String newText) {
+                // Filter products as the user types
+                searchProduct(newText);
+                return true;
             }
         });
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -50,21 +50,15 @@ public class ViewProductActivity extends AppCompatActivity {
         displayProducts();
     }
 
-    private void displayProducts() {
+    public void displayProducts() {
         Cursor cursor = databaseHelper.getAllProducts();
-        ProductAdapter adapter = new ProductAdapter(this, cursor, true);
-        listViewProducts.setAdapter(adapter);
+        productAdapter = new ProductAdapter(this, cursor, true);
+        listViewProducts.setAdapter(productAdapter);
     }
 
-    private void handleUpdate() {
-        // Logic for updating a product
-        Intent intent = new Intent(ViewProductActivity.this, UpdateProductActivity.class); // Assuming HomeActivity is the activity after login
-        startActivity(intent);
-    }
-    //
-    private void handleDelete() {
-        Intent intent = new Intent(ViewProductActivity.this, DeleteProductActivity.class); // Assuming HomeActivity is the activity after login
-        startActivity(intent);
-        Toast.makeText(this, "Delete button clicked", Toast.LENGTH_SHORT).show();
+    private void searchProduct(String query) {
+        Cursor cursor = databaseHelper.getProductByName(query); // Search by name
+        productAdapter = new ProductAdapter(this, cursor, true);
+        listViewProducts.setAdapter(productAdapter);
     }
 }

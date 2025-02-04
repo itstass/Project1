@@ -49,6 +49,8 @@ public class InsertProductActivity extends AppCompatActivity {
 
         databaseHelper = new DatabaseHelper(this);
 //////////////////////////////////////////////
+
+
         imagePickerLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
                 Uri imageUri = result.getData().getData();

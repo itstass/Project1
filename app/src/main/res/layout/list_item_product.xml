@@ -1,44 +1,65 @@
-<!-- list_item_product.xml -->
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-
     android:padding="8dp">
 
     <ImageView
         android:id="@+id/image_view_product"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:scaleType="centerCrop"
         android:src="@drawable/uplode_icon" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="185dp"
+        android:layout_height="150dp"
         android:layout_marginStart="16dp"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/text_view_product_name"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:textSize="24sp"
+            android:layout_height="30dp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/text_view_product_price"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:textSize="20sp" />
+            android:layout_height="30dp"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/text_view_product_quantity"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:textSize="20sp" />
+            android:layout_height="30dp"
+            android:textSize="15sp" />
+
+        <!-- Updated LinearLayout for buttons with horizontal orientation -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <!-- Update Button -->
+            <Button
+                android:id="@+id/button_update"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Update"
+                android:layout_marginEnd="8dp" />
+
+            <!-- Delete Button -->
+            <Button
+                android:id="@+id/button_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:text="Delete" />
+        </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>
