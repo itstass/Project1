@@ -22,7 +22,7 @@ public class ProductAdapter extends CursorAdapter {
     public ProductAdapter(Context context, Cursor cursor, boolean isAdmin) {
         super(context, cursor, 0);
         this.isAdmin = isAdmin;
-        this.databaseHelper = new DatabaseHelper(context); // Initialize the DatabaseHelper here
+        this.databaseHelper = new DatabaseHelper(context);
     }
 
     @Override
@@ -31,10 +31,8 @@ public class ProductAdapter extends CursorAdapter {
 
         // Load different layouts for admin and user
         if (isAdmin) {
-            // Inflate layout with Update and Delete buttons for admin
             return inflater.inflate(R.layout.list_item_product, parent, false);
         } else {
-            // Inflate layout without buttons for users
             return inflater.inflate(R.layout.list_item_product_user, parent, false);
         }
     }
@@ -44,10 +42,14 @@ public class ProductAdapter extends CursorAdapter {
         TextView nameTextView = view.findViewById(R.id.text_view_product_name);
         TextView priceTextView = view.findViewById(R.id.text_view_product_price);
         TextView quantityTextView = view.findViewById(R.id.text_view_product_quantity);
+        TextView descriptionTextView = view.findViewById(R.id.text_view_product_details);  // New
+        TextView categoryTextView = view.findViewById(R.id.text_view_product_category);  // New
         ImageView productImageView = view.findViewById(R.id.image_view_product);
 
         // Get product data from the cursor
         String name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_PRODUCT_NAME));
+        String description = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_PRODUCT_DESCRIPTION));  // New
+        String category = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_PRODUCT_CATEGORY));  // New
         double price = cursor.getDouble(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_PRODUCT_PRICE));
         int quantity = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_PRODUCT_QUANTITY));
         byte[] imageBytes = cursor.getBlob(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_PRODUCT_IMAGE_URI));
@@ -56,6 +58,8 @@ public class ProductAdapter extends CursorAdapter {
         nameTextView.setText(name);
         priceTextView.setText("Price: tk" + price);
         quantityTextView.setText("Quantity: " + quantity);
+        descriptionTextView.setText("Details: " + description);  // New
+        categoryTextView.setText("Category: " + category);  // New
 
         // Decode image byte array to Bitmap
         Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
@@ -66,28 +70,25 @@ public class ProductAdapter extends CursorAdapter {
             Button buttonUpdate = view.findViewById(R.id.button_update);
             Button buttonDelete = view.findViewById(R.id.button_delete);
 
-            // Get the product name from the cursor
             final String productName = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_PRODUCT_NAME));
 
             // Set click listeners for update and delete buttons
             buttonUpdate.setOnClickListener(v -> {
-                // Pass product details to UpdateProductActivity
                 Intent updateIntent = new Intent(context, UpdateProductActivity.class);
                 updateIntent.putExtra("product_id", cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_ID)));
-                updateIntent.putExtra("product_name", cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_PRODUCT_NAME)));
-                updateIntent.putExtra("product_price", cursor.getDouble(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_PRODUCT_PRICE)));
-                updateIntent.putExtra("product_quantity", cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_PRODUCT_QUANTITY)));
-                updateIntent.putExtra("product_image", cursor.getBlob(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_PRODUCT_IMAGE_URI)));
+                updateIntent.putExtra("product_name", name);
+                updateIntent.putExtra("product_description", description);  // New
+                updateIntent.putExtra("product_category", category);  // New
+                updateIntent.putExtra("product_price", price);
+                updateIntent.putExtra("product_quantity", quantity);
+                updateIntent.putExtra("product_image", imageBytes);
                 context.startActivity(updateIntent);
             });
 
-
             buttonDelete.setOnClickListener(v -> {
-                // Call the deleteProductByName method in DatabaseHelper to delete the product by name
                 boolean deleted = deleteProductByName(productName);
                 if (deleted) {
                     Toast.makeText(context, "Product deleted successfully", Toast.LENGTH_SHORT).show();
-                    // Refresh the product list in the activity
                     ((ViewProductActivity) context).displayProducts();
                 } else {
                     Toast.makeText(context, "Failed to delete product", Toast.LENGTH_SHORT).show();
@@ -97,8 +98,7 @@ public class ProductAdapter extends CursorAdapter {
     }
 
     private boolean deleteProductByName(String productName) {
-        // Call the deleteProductByName method from DatabaseHelper to delete the product by name
-        databaseHelper.deleteProductByName(productName);  // Pass product name to delete the product
+        databaseHelper.deleteProductByName(productName);
         return true;
     }
 }

@@ -17,7 +17,7 @@ public class HomePage extends AppCompatActivity {
         findViewById(R.id.orderMedicineCard).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View widget) {
-                Intent intent = new Intent(HomePage.this, CatagoriesActivity.class);
+                Intent intent = new Intent(HomePage.this, HomePage2.class);
                 startActivity(intent);
             }
         });

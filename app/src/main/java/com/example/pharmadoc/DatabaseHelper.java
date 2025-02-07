@@ -16,6 +16,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_PRODUCT_PRICE = "productPrice";
     public static final String COL_PRODUCT_QUANTITY = "productQuantity";
     public static final String COL_PRODUCT_IMAGE_URI = "productImageUri";
+    public static final String COL_PRODUCT_DESCRIPTION = "productDescription";
+    public static final String COL_PRODUCT_CATEGORY = "productCategory";
 
     // Constructor
     public DatabaseHelper(Context context) {
@@ -27,6 +29,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + TABLE_PRODUCTS + " (" +
                 COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COL_PRODUCT_NAME + " TEXT, " +
+                COL_PRODUCT_DESCRIPTION + " TEXT, " +
+                COL_PRODUCT_CATEGORY + " TEXT, " +
                 COL_PRODUCT_PRICE + " REAL, " +
                 COL_PRODUCT_QUANTITY + " INTEGER, " +
                 COL_PRODUCT_IMAGE_URI + " BLOB)");
@@ -39,10 +43,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Insert a product
-    public void insertProduct(String name, double price, int quantity, byte[] imageByteArray) {
+    public void insertProduct(String name, String description, String category, double price, int quantity, byte[] imageByteArray) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COL_PRODUCT_NAME, name);
+        values.put(COL_PRODUCT_DESCRIPTION, description);
+        values.put(COL_PRODUCT_CATEGORY, category);
         values.put(COL_PRODUCT_PRICE, price);
         values.put(COL_PRODUCT_QUANTITY, quantity);
         values.put(COL_PRODUCT_IMAGE_URI, imageByteArray);
@@ -63,10 +69,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Update product
-    public void updateProduct(int productId, String productName, double price, int quantity, byte[] productImageByteArray) {
+    public void updateProduct(int productId, String productName,  String description, String category,double price, int quantity, byte[] productImageByteArray) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COL_PRODUCT_NAME, productName);
+        values.put(COL_PRODUCT_DESCRIPTION, description);
+        values.put(COL_PRODUCT_CATEGORY, category);
         values.put(COL_PRODUCT_PRICE, price);
         values.put(COL_PRODUCT_QUANTITY, quantity);
         values.put(COL_PRODUCT_IMAGE_URI, productImageByteArray);
@@ -74,6 +82,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.update(TABLE_PRODUCTS, values, COL_ID + " = ?", new String[]{String.valueOf(productId)});
         db.close();
     }
+
+
 
     // Delete product by name
     public void deleteProductByName(String productName) {
