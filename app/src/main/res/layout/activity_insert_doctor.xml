@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/edit_text_doctor_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Doctor Name"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/edit_text_doctor_specialization"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Specialization"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/edit_text_doctor_contact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Contact Number"
+        android:inputType="phone" />
+
+    <EditText
+        android:id="@+id/edit_text_doctor_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email Address"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/button_insert_doctor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Insert Doctor" />
+
+</LinearLayout>

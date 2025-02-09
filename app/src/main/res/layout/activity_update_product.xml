@@ -46,6 +46,12 @@
         android:src="@drawable/ic_launcher_foreground" />
 
     <Button
+        android:id="@+id/button_select_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Image" />
+
+    <Button
         android:id="@+id/button_update_product"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

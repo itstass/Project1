@@ -2,11 +2,10 @@ package com.example.pharmadoc;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class HomePage extends AppCompatActivity {
     @Override
@@ -22,9 +21,13 @@ public class HomePage extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.consultDoctorsCard).setOnClickListener(v ->
-                Toast.makeText(this, "Consult Doctors clicked!", Toast.LENGTH_SHORT).show()
-        );
+        findViewById(R.id.consultDoctorsCard).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View widget) {
+                Intent intent = new Intent(HomePage.this, ConsultDoctor.class);
+                startActivity(intent);
+            }
+        });
     }
 
     // 🔹 Default Back Button Handling

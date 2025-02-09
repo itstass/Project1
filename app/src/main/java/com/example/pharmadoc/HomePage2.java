@@ -16,6 +16,8 @@ public class HomePage2 extends AppCompatActivity {
     private DatabaseHelper databaseHelper;
     private FirebaseAuth mAuth;
     private Button btnLogout;
+    private Button viewCartButton;
+    private Button btnCatagory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,8 @@ public class HomePage2 extends AppCompatActivity {
 
         listViewProducts = findViewById(R.id.product_list);
         btnLogout = findViewById(R.id.btn_logout);
+        viewCartButton = findViewById(R.id.button_cart);
+        btnCatagory=findViewById(R.id.btn_catagory);
 
         // Load products from SQLite for user
         loadProducts();
@@ -37,6 +41,19 @@ public class HomePage2 extends AppCompatActivity {
             Toast.makeText(HomePage2.this, "Logged out", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(HomePage2.this, MainActivity.class));
             finish();
+        });
+
+        // View Cart button functionality
+        viewCartButton.setOnClickListener(v -> {
+            // Open CartActivity when "View Cart" is clicked
+            Intent intent = new Intent(HomePage2.this, CartActivity.class);
+            startActivity(intent);
+        });
+
+        btnCatagory.setOnClickListener(v -> {
+            // Open CartActivity when "View Cart" is clicked
+            Intent intent = new Intent(HomePage2.this, CatagoriesActivity.class);
+            startActivity(intent);
         });
     }
 

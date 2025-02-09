@@ -39,6 +39,7 @@ public class ProductAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
+        // Find views
         TextView nameTextView = view.findViewById(R.id.text_view_product_name);
         TextView priceTextView = view.findViewById(R.id.text_view_product_price);
         TextView quantityTextView = view.findViewById(R.id.text_view_product_quantity);
@@ -94,11 +95,31 @@ public class ProductAdapter extends CursorAdapter {
                     Toast.makeText(context, "Failed to delete product", Toast.LENGTH_SHORT).show();
                 }
             });
+        } else {
+            // For regular users, show "Add to Cart" button
+            Button addToCartButton = view.findViewById(R.id.addToCartButton);
+            addToCartButton.setOnClickListener(v -> {
+                Product product = new Product(name, BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length), price);
+
+                CartManager.getInstance().addProduct(product);
+                String message = name + " has been added to your cart!";
+                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+
+                // Optionally, store the product in SharedPreferences, SQLite, or an in-memory cart
+                addToCart(name, price);
+            });
         }
     }
 
     private boolean deleteProductByName(String productName) {
         databaseHelper.deleteProductByName(productName);
         return true;
+    }
+
+    // Example method to add product to the cart
+    private void addToCart(String productName, double productPrice) {
+        // You can store the product data in SharedPreferences or a database.
+        // Example: For simplicity, we show a Toast message.
+        // Replace this with your actual cart handling logic.
     }
 }

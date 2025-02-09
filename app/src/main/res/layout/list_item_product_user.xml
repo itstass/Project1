@@ -64,32 +64,15 @@
             android:layout_marginTop="8dp">
 
             <Button
-                android:id="@+id/button_update"
-                android:layout_width="wrap_content"
+                android:id="@+id/addToCartButton"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Update"
-                android:paddingHorizontal="12dp"
-                android:layout_marginEnd="8dp" />
+                android:text="Add to Cart"/>
 
-            <Button
-                android:id="@+id/button_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Delete"
-                android:paddingHorizontal="12dp" />
+
         </LinearLayout>
 
     </LinearLayout>
 
-
-
-<Button
-        android:id="@+id/button_order"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Order"
-        android:backgroundTint="@color/black"
-        android:textColor="@android:color/white"
-        android:layout_marginTop="8dp" />
 
 </LinearLayout>
