@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+
 import com.google.firebase.auth.FirebaseAuth;
 
 public class HomePage2 extends AppCompatActivity {
@@ -18,6 +20,9 @@ public class HomePage2 extends AppCompatActivity {
     private Button btnLogout;
     private Button viewCartButton;
     private Button btnCatagory;
+    private SearchView searchView;
+    private ProductAdapter productAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +36,27 @@ public class HomePage2 extends AppCompatActivity {
         btnLogout = findViewById(R.id.btn_logout);
         viewCartButton = findViewById(R.id.button_cart);
         btnCatagory=findViewById(R.id.btn_catagory);
+        searchView = findViewById(R.id.search_view);
 
         // Load products from SQLite for user
         loadProducts();
 
+        // Setup search functionality
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Handle the action when search is submitted
+                searchProduct(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // Filter products as the user types
+                searchProduct(newText);
+                return true;
+            }
+        });
         // Logout button functionality
         btnLogout.setOnClickListener(v -> {
            // mAuth.signOut();
@@ -61,5 +83,10 @@ public class HomePage2 extends AppCompatActivity {
         Cursor cursor = databaseHelper.getAllProducts();
         ProductAdapter adapter = new ProductAdapter(this, cursor, false); // User mode
         listViewProducts.setAdapter(adapter);
+    }
+    private void searchProduct(String query) {
+        Cursor cursor = databaseHelper.getProductByName(query); // Search by name
+        productAdapter = new ProductAdapter(this, cursor, true);
+        listViewProducts.setAdapter(productAdapter);
     }
 }
