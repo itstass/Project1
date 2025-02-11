@@ -14,12 +14,12 @@
         android:divider="@android:color/darker_gray"
         android:dividerHeight="1dp"/>
 
-    <!-- Log Out Button (Optional) -->
     <Button
-        android:id="@+id/btn_logout"
+        android:id="@+id/button_map_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Log Out"
+        android:text="Find us on Map"
         android:backgroundTint="#D8F1F7"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black"
+        android:layout_marginTop="16dp"/>
 </LinearLayout>

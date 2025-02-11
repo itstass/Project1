@@ -47,7 +47,7 @@ public class ViewDoctorActivity extends AppCompatActivity {
     // Method to open Google Maps with a location
     private void openMapLocation() {
         // Example: replace with actual location coordinates
-        String uri = "geo:37.7749,-122.4194?q=37.7749,-122.4194(San+Francisco)"; // San Francisco coordinates
+        String uri = "geo:24.899105,91.862685?q=24.899105,91.862685(Pharmacy+Location)\n";
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
         intent.setPackage("com.google.android.apps.maps"); // Ensure it opens in Google Maps
         startActivity(intent);

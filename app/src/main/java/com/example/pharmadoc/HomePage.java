@@ -51,7 +51,7 @@ public class HomePage extends AppCompatActivity {
         });
 
         findViewById(R.id.consultDoctorsCard).setOnClickListener(v -> {
-            Intent intent = new Intent(HomePage.this, ViewDoctorActivity.class);
+            Intent intent = new Intent(HomePage.this, ConsultDoctor.class);
             startActivity(intent);
         });
     }

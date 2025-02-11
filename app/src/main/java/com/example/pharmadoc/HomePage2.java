@@ -37,7 +37,7 @@ public class HomePage2 extends AppCompatActivity {
 
         // Logout button functionality
         btnLogout.setOnClickListener(v -> {
-            mAuth.signOut();
+           // mAuth.signOut();
             Toast.makeText(HomePage2.this, "Logged out", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(HomePage2.this, MainActivity.class));
             finish();

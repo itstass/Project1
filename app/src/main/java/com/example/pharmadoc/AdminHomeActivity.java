@@ -4,6 +4,7 @@ package com.example.pharmadoc;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,7 @@ public class AdminHomeActivity extends AppCompatActivity {
         Button btnInsertDoctor =findViewById(R.id.btn_insert_doctor);
         Button btnViewDoctor =findViewById(R.id.btn_view_doctor);
         Button btnViewOrder = findViewById(R.id.btn_view_order);
+        Button btnLogout  = findViewById(R.id.btn_logout);;
 
         btnInsertProduct.setOnClickListener(v -> {
             Intent intent = new Intent(AdminHomeActivity.this, InsertProductActivity.class);
@@ -48,6 +50,14 @@ public class AdminHomeActivity extends AppCompatActivity {
         btnViewOrder.setOnClickListener(v -> {
             Intent intent = new Intent(AdminHomeActivity.this, ViewCartActivity.class);
             startActivity(intent);
+        });
+
+        // Logout button functionality
+        btnLogout.setOnClickListener(v -> {
+
+            Toast.makeText(AdminHomeActivity.this, "Logged out", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(AdminHomeActivity.this, MainActivity.class));
+            finish();
         });
 
     }

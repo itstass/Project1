@@ -2,6 +2,7 @@ package com.example.pharmadoc;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ListView;
@@ -20,7 +21,8 @@ public class ConsultDoctor extends AppCompatActivity {
     private ListView listViewDoctors;
     private DatabaseHelper databaseHelper;
     private FirebaseAuth mAuth;
-    private Button btnLogout;
+
+    private Button mapButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,24 +33,30 @@ public class ConsultDoctor extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(this);
 
         listViewDoctors = findViewById(R.id.list_view_doctors);
-        btnLogout = findViewById(R.id.btn_logout);
+
+        mapButton = findViewById(R.id.button_map_location);
 
         // Load products from SQLite for user
         loadDoctors();
 
-        // Logout button functionality
-        btnLogout.setOnClickListener(v -> {
-            mAuth.signOut();
-            Toast.makeText(ConsultDoctor.this, "Logged out", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(ConsultDoctor.this, MainActivity.class));
-            finish();
-        });
+        mapButton.setOnClickListener(v -> openMapLocation());
+
+
+
     }
 
    public void loadDoctors() {
         Cursor cursor = databaseHelper.getAllDoctors();
         DoctorAdapter adapter = new DoctorAdapter(this, cursor, false); // User mode
         listViewDoctors.setAdapter(adapter);
+    }
+
+    private void openMapLocation() {
+        // Example: replace with actual location coordinates
+        String uri = "geo:24.899105,91.862685?q=24.899105,91.862685(Pharmacy+Location)\n";
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        intent.setPackage("com.google.android.apps.maps"); // Ensure it opens in Google Maps
+        startActivity(intent);
     }
 
 }

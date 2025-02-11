@@ -21,7 +21,7 @@ public class ViewCartActivity extends AppCompatActivity {
         cartListView = findViewById(R.id.cart_list_view);
 
         DatabaseHelper dbHelper = new DatabaseHelper(this);
-        Cursor cursor = dbHelper.getCartWithPaymentDetails();
+        Cursor cursor = dbHelper.getPaymentItems();
 
 
         if (cursor == null) {
@@ -36,19 +36,19 @@ public class ViewCartActivity extends AppCompatActivity {
         }
 
         String[] fromColumns = {
-                DatabaseHelper.COL_CART_PRODUCT_NAME,
-                DatabaseHelper.COL_CART_PRODUCT_PRICE,
-                DatabaseHelper.COL_CART_FULL_NAME,      // Use correct column names
-                DatabaseHelper.COL_CART_PHONE_NUMBER,
-                DatabaseHelper.COL_CART_EMAIL,
-                DatabaseHelper.COL_CART_SHIPPING_ADDRESS,
-                DatabaseHelper.COL_CART_DELIVERY_NOTE,
-                DatabaseHelper.COL_CART_PAYMENT_METHOD
+               // DatabaseHelper.COL_CART_PRODUCT_NAME,
+                //DatabaseHelper.COL_CART_PRODUCT_PRICE,
+                DatabaseHelper.COL_PAYMENT_FULL_NAME,      // Use correct column names
+                DatabaseHelper.COL_PAYMENT_PHONE_NUMBER,
+                DatabaseHelper.COL_PAYMENT_EMAIL,
+                DatabaseHelper.COL_PAYMENT_SHIPPING_ADDRESS,
+                DatabaseHelper.COL_PAYMENT_DELIVERY_NOTE,
+                DatabaseHelper.COL_PAYMENT_METHOD
         };
 
         int[] toViews = {
-                R.id.cart_product_name,
-                R.id.cart_product_price,
+               // R.id.cart_product_name,
+               // R.id.cart_product_price,
                 R.id.cart_full_name,
                 R.id.cart_phone_number,
                 R.id.cart_email,

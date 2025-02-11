@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Test_DB";
-    public static final int DATABASE_VERSION = 5;
+    public static final int DATABASE_VERSION = 6;
 
     // Products table constants
     public static final String TABLE_PRODUCTS = "products";
@@ -33,12 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_CART_ID = "_id";
     public static final String COL_CART_PRODUCT_NAME = "product_name";
     public static final String COL_CART_PRODUCT_PRICE = "product_price";
-    public static final String COL_CART_FULL_NAME = "fullName";
-    public static final String COL_CART_PHONE_NUMBER = "phoneNumber";
-    public static final String COL_CART_EMAIL = "email";
-    public static final String COL_CART_SHIPPING_ADDRESS = "shippingAddress";
-    public static final String COL_CART_DELIVERY_NOTE = "deliveryNote";
-    public static final String COL_CART_PAYMENT_METHOD = "paymentMethod";
+
 
     public static final String TABLE_PAYMENTS = "payments";
     public static final String COL_PAYMENT_ID = "_id";

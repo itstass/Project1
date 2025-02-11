@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -14,13 +15,14 @@ public class CartAdapter extends BaseAdapter {
 
     private Context context;
     private ArrayList<Product> cartProducts;
-    private TextView totalPriceTextView;  // Added for displaying total price
+    private TextView totalPriceTextView;// Added for displaying total price
 
     // Constructor
     public CartAdapter(Context context, ArrayList<Product> cartProducts, TextView totalPriceTextView) {
         this.context = context;
         this.cartProducts = cartProducts;
         this.totalPriceTextView = totalPriceTextView; // Initialize total price TextView
+
     }
 
     @Override
@@ -83,8 +85,16 @@ public class CartAdapter extends BaseAdapter {
 
     // Method to save the updated cart (optional)
     private void saveCartToDatabase() {
-        // Implement your logic here to save the updated cart data
-        // Example: Save to SharedPreferences, SQLite, or any other persistence layer you're using
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+
+        // Loop through cart products and insert them into the database
+        for (Product product : cartProducts) {
+            // Use the addToCart method to save the product to the cart table
+            boolean isAdded = dbHelper.addToCart(product.getName(), product.getPrice());
+            if (!isAdded) {
+                Toast.makeText(context, "Error saving cart item", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     // Method to update the total price
