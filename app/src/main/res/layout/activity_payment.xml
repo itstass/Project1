@@ -126,11 +126,11 @@
             android:id="@+id/buttonPlaceOrder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Place Order"
-            android:background="#000000"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
             android:layout_marginTop="20dp"
-            android:padding="12dp" />
+            android:padding="12dp"
+            android:text="Place Order"
+            android:backgroundTint="#FFE2E2"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
     </LinearLayout>
 </ScrollView>

@@ -48,8 +48,8 @@
         android:layout_height="wrap_content"
         android:text="Proceed to Checkout"
         android:textSize="16sp"
-        android:background="@android:color/holo_blue_dark"
-        android:textColor="@android:color/white"
+        android:backgroundTint="#FFE2E2"
+        android:textColor="@color/black"
         android:padding="12dp"
         android:layout_marginTop="10dp"/>
 </LinearLayout>

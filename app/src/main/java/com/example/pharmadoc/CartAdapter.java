@@ -97,4 +97,6 @@ public class CartAdapter extends BaseAdapter {
         // Update the total price TextView
         totalPriceTextView.setText("Total: tk" + totalPrice);
     }
+
+
 }

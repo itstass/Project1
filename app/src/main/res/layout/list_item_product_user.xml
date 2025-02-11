@@ -67,7 +67,9 @@
                 android:id="@+id/addToCartButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Add to Cart"/>
+                android:text="Add to Cart"
+                android:backgroundTint="#FFE2E2"
+                android:textColor="@color/black"/>
 
 
         </LinearLayout>

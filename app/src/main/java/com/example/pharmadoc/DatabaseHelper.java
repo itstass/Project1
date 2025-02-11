@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Test_DB";
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 5;
 
     // Products table constants
     public static final String TABLE_PRODUCTS = "products";
@@ -30,10 +30,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_DOCTOR_EMAIL = "doctorEmail";
 
     public static final String TABLE_CART = "cart";
-    public static final String COL_CART_PRODUCT_ID = "product_id";
+    public static final String COL_CART_ID = "_id";
     public static final String COL_CART_PRODUCT_NAME = "product_name";
     public static final String COL_CART_PRODUCT_PRICE = "product_price";
+    public static final String COL_CART_FULL_NAME = "fullName";
+    public static final String COL_CART_PHONE_NUMBER = "phoneNumber";
+    public static final String COL_CART_EMAIL = "email";
+    public static final String COL_CART_SHIPPING_ADDRESS = "shippingAddress";
+    public static final String COL_CART_DELIVERY_NOTE = "deliveryNote";
+    public static final String COL_CART_PAYMENT_METHOD = "paymentMethod";
 
+    public static final String TABLE_PAYMENTS = "payments";
+    public static final String COL_PAYMENT_ID = "_id";
+    public static final String COL_PAYMENT_FULL_NAME = "fullName";
+    public static final String COL_PAYMENT_PHONE_NUMBER = "phoneNumber";
+    public static final String COL_PAYMENT_EMAIL = "email";
+    public static final String COL_PAYMENT_SHIPPING_ADDRESS = "shippingAddress";
+    public static final String COL_PAYMENT_DELIVERY_NOTE = "deliveryNote";
+    public static final String COL_PAYMENT_METHOD = "paymentMethod";
 
     // Constructor
     public DatabaseHelper(Context context) {
@@ -60,12 +74,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "doctorContact TEXT, " +
                 "doctorEmail TEXT)");
 
-        db.execSQL("CREATE TABLE " + TABLE_CART + " ("
-                + COL_CART_PRODUCT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + COL_CART_PRODUCT_NAME + " TEXT, "
-                + COL_CART_PRODUCT_PRICE + " REAL)");
+        // Create the cart table
+        db.execSQL("CREATE TABLE " + TABLE_CART + " (" +
+                COL_CART_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COL_CART_PRODUCT_NAME + " TEXT, " +
+                COL_CART_PRODUCT_PRICE + " REAL) " );
 
-
+        db.execSQL("CREATE TABLE " + TABLE_PAYMENTS + " (" +
+                COL_PAYMENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COL_PAYMENT_FULL_NAME + " TEXT, " +
+                COL_PAYMENT_PHONE_NUMBER + " TEXT, " +
+                COL_PAYMENT_EMAIL + " TEXT, " +
+                COL_PAYMENT_SHIPPING_ADDRESS + " TEXT, " +
+                COL_PAYMENT_DELIVERY_NOTE + " TEXT, " +
+                COL_PAYMENT_METHOD + " TEXT)");
 
 }
 
@@ -76,6 +98,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRODUCTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DOCTORS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CART); // Added this line
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PAYMENTS);
         onCreate(db);
     }
 
@@ -154,11 +177,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Delete product by name
-    public void deleteProductByName(String productName) {
+    public boolean deleteProductByName(String productName) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_PRODUCTS, COL_PRODUCT_NAME + " = ?", new String[]{productName});
+        int rowsAffected = db.delete(TABLE_PRODUCTS, COL_PRODUCT_NAME + " = ?", new String[]{productName});
         db.close();
+        return rowsAffected > 0; // Return true if at least one row was deleted
     }
+
 
     public boolean deleteDoctorById(int doctorId) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -172,13 +197,49 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COL_CART_PRODUCT_NAME, productName);
         values.put(COL_CART_PRODUCT_PRICE, productPrice);
 
+
         long result = db.insert(TABLE_CART, null, values);
         return result != -1;
     }
+
+    public boolean insertPaymentDetails(String fullName, String phoneNumber, String email,
+                                        String shippingAddress, String deliveryNote, String paymentMethod) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_PAYMENT_FULL_NAME, fullName);
+        values.put(COL_PAYMENT_PHONE_NUMBER, phoneNumber);
+        values.put(COL_PAYMENT_EMAIL, email);
+        values.put(COL_PAYMENT_SHIPPING_ADDRESS, shippingAddress);
+        values.put(COL_PAYMENT_DELIVERY_NOTE, deliveryNote);
+        values.put(COL_PAYMENT_METHOD, paymentMethod);
+
+        long result = db.insert(TABLE_PAYMENTS, null, values);
+        return result != -1;
+    }
+
+
+    // Get cart items (Fixed)
     public Cursor getCartItems() {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.query(TABLE_CART, null, null, null, null, null, null);
+        return db.rawQuery("SELECT * FROM " + TABLE_CART, null);
     }
+
+    public Cursor getPaymentItems() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM " + TABLE_PAYMENTS, null);
+    }
+
+    public Cursor getCartWithPaymentDetails() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT c._id, c.product_name, c.product_price, " +
+                "p.fullName, p.phoneNumber, p.email, " +
+                "p.shippingAddress, p.deliveryNote, p.paymentMethod " +
+                "FROM cart c " +
+                "LEFT JOIN payments p ON c._id = p._id"; // Assuming both share IDs
+
+        return db.rawQuery(query, null);
+    }
+
 
 
 

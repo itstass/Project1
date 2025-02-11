@@ -91,7 +91,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="@color/design_default_color_secondary_variant"
+            android:backgroundTint="#D8F1F7"
             android:text="Search" />
 
         <!-- Delete Button -->
@@ -100,7 +100,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="@color/design_default_color_error"
+            android:backgroundTint="@color/material_dynamic_tertiary20"
             android:text="Delete Product" />
     </LinearLayout>
 

@@ -76,12 +76,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Select Image"
+        android:backgroundTint="#FFE2E2"
+        android:textColor="@color/black"
         android:layout_marginBottom="16dp"/>
 
     <Button
         android:id="@+id/btn_insert_product"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Insert Product" />
+        android:text="Insert Product"
+        android:backgroundTint="#D8F1F7"
+        android:textColor="@color/black"/>
 
 </LinearLayout>

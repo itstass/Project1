@@ -20,25 +20,41 @@
         android:layout_width="200dp"
         android:layout_height="62dp"
         android:layout_marginBottom="16dp"
-        android:text="Insert Product" />
+        android:text="Insert Product"
+        android:backgroundTint="#D8F1F7"
+        android:textColor="@color/black"/>
 
     <Button
         android:id="@+id/btn_view_product"
         android:layout_width="200dp"
         android:layout_height="89dp"
-        android:text="View Product" />
+        android:backgroundTint="#FFE2E2"
+        android:text="View Product"
+        android:textColor="@color/black" />
 
     <Button
         android:id="@+id/btn_insert_doctor"
         android:layout_width="200dp"
         android:layout_height="62dp"
         android:layout_marginBottom="16dp"
-        android:text="Insert Doctor" />
+        android:text="Insert Doctor"
+        android:backgroundTint="#D8F1F7"
+        android:textColor="@color/black"/>
 
     <Button
         android:id="@+id/btn_view_doctor"
         android:layout_width="200dp"
         android:layout_height="89dp"
-        android:text="View Doctor" />
+        android:text="View Doctor"
+        android:backgroundTint="#FFE2E2"
+        android:textColor="@color/black"/>
+
+    <Button
+        android:id="@+id/btn_view_order"
+        android:layout_width="200dp"
+        android:layout_height="89dp"
+        android:text="View Orders"
+        android:backgroundTint="#D8F1F7"
+        android:textColor="@color/black"/>
 
 </LinearLayout>

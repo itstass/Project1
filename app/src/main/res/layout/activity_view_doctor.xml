@@ -8,6 +8,15 @@
     <ListView
         android:id="@+id/list_view_doctors"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <!-- Add a Button to open Google Maps -->
+    <Button
+        android:id="@+id/button_map_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Location on Map"
+        android:layout_marginTop="16dp"/>
 
 </LinearLayout>

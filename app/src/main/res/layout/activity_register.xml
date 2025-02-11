@@ -71,15 +71,16 @@
             />
 
 
-        <Button
-            android:id="@+id/btn_register"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:backgroundTint="#2A3E2B"
-            android:padding="16dp"
-            android:text="Register"
-            android:textColor="@android:color/white" />
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:padding="16dp"
+        android:text="Register"
+        android:backgroundTint="#FFE2E2"
+        android:textColor="@color/black"
+       />
 
     <TextView
         android:id="@+id/tv_login_link"

@@ -43,28 +43,31 @@ public class PaymentActivity extends AppCompatActivity {
                 String fullName = fullNameEditText.getText().toString().trim();
                 String phoneNumber = phoneNumberEditText.getText().toString().trim();
                 String email = emailEditText.getText().toString().trim();
+                String shippingAddress = shippingAddressEditText.getText().toString().trim();
                 String deliveryNote = deliveryNoteEditText.getText().toString().trim();
-                String shippingAddress = shippingAddressEditText.getText().toString().trim(); // Get address from EditText
-
-                // Get selected payment method
                 String selectedPaymentMethod = paymentMethodSpinner.getSelectedItem().toString();
 
-                // Simple validation
-                if (fullName.isEmpty() || phoneNumber.isEmpty() || email.isEmpty() || shippingAddress.isEmpty() || selectedPaymentMethod.equals("Select Payment Method")) {
+                // Validate input
+                if (fullName.isEmpty() || phoneNumber.isEmpty() || email.isEmpty() ||
+                        shippingAddress.isEmpty() || selectedPaymentMethod.equals("Select Payment Method")) {
                     Toast.makeText(PaymentActivity.this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
-                } else {
-                    // Order summary for user
-                    String orderSummary = "Order placed successfully!\n" +
-                            "Name: " + fullName + "\n" +
-                            "Phone: " + phoneNumber + "\n" +
-                            "Email: " + email + "\n" +
-                            "Address: " + shippingAddress + "\n" +
-                            "Payment Method: " + selectedPaymentMethod + "\n" +
-                            "Delivery Note: " + deliveryNote;
+                    return;
+                }
 
-                    Toast.makeText(PaymentActivity.this, orderSummary, Toast.LENGTH_LONG).show();
+
+
+
+                DatabaseHelper dbHelper = new DatabaseHelper(PaymentActivity.this);
+                boolean isInserted = dbHelper.insertPaymentDetails(fullName, phoneNumber, email, shippingAddress, deliveryNote, selectedPaymentMethod);
+
+
+                if (isInserted) {
+                    Toast.makeText(PaymentActivity.this, "Order placed successfully!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(PaymentActivity.this, "Failed to place order.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
     }
 }

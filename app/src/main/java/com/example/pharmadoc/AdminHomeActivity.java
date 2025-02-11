@@ -21,6 +21,7 @@ public class AdminHomeActivity extends AppCompatActivity {
         Button btnViewProduct =findViewById(R.id.btn_view_product);
         Button btnInsertDoctor =findViewById(R.id.btn_insert_doctor);
         Button btnViewDoctor =findViewById(R.id.btn_view_doctor);
+        Button btnViewOrder = findViewById(R.id.btn_view_order);
 
         btnInsertProduct.setOnClickListener(v -> {
             Intent intent = new Intent(AdminHomeActivity.this, InsertProductActivity.class);
@@ -41,6 +42,11 @@ public class AdminHomeActivity extends AppCompatActivity {
 
         btnViewDoctor.setOnClickListener(v -> {
             Intent intent = new Intent(AdminHomeActivity.this, ViewDoctorActivity.class);
+            startActivity(intent);
+        });
+
+        btnViewOrder.setOnClickListener(v -> {
+            Intent intent = new Intent(AdminHomeActivity.this, ViewCartActivity.class);
             startActivity(intent);
         });
 

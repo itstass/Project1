@@ -1,5 +1,6 @@
 package com.example.pharmadoc;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -86,15 +87,7 @@ public class ProductAdapter extends CursorAdapter {
                 context.startActivity(updateIntent);
             });
 
-            buttonDelete.setOnClickListener(v -> {
-                boolean deleted = deleteProductByName(productName);
-                if (deleted) {
-                    Toast.makeText(context, "Product deleted successfully", Toast.LENGTH_SHORT).show();
-                    ((ViewProductActivity) context).displayProducts();
-                } else {
-                    Toast.makeText(context, "Failed to delete product", Toast.LENGTH_SHORT).show();
-                }
-            });
+            buttonDelete.setOnClickListener(v -> showDeleteConfirmationDialog(context, name));
         } else {
             // For regular users, show "Add to Cart" button
             Button addToCartButton = view.findViewById(R.id.addToCartButton);
@@ -109,6 +102,23 @@ public class ProductAdapter extends CursorAdapter {
                 addToCart(name, price);
             });
         }
+    }
+
+    private void showDeleteConfirmationDialog(Context context, String productName) {
+        new AlertDialog.Builder(context)
+                .setTitle("Confirm Deletion")
+                .setMessage("Are you sure you want to delete this product?")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    boolean deleted = databaseHelper.deleteProductByName(productName);
+                    if (deleted) {
+                        Toast.makeText(context, "Product deleted successfully", Toast.LENGTH_SHORT).show();
+                        swapCursor(databaseHelper.getAllProducts());
+                    } else {
+                        Toast.makeText(context, "Failed to delete product", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
+                .show();
     }
 
     private boolean deleteProductByName(String productName) {
